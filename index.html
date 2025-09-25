@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,14 +12,14 @@
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         body {
             background-color: #f5f7fa;
             color: #333;
             line-height: 1.6;
             padding: 20px;
         }
-        
+
         .container {
             max-width: 1000px;
             margin: 0 auto;
@@ -27,7 +28,7 @@
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
             padding: 30px;
         }
-        
+
         h1 {
             text-align: center;
             color: #2c3e50;
@@ -35,18 +36,18 @@
             padding-bottom: 15px;
             border-bottom: 2px solid #3498db;
         }
-        
+
         .input-group {
             margin-bottom: 20px;
         }
-        
+
         label {
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
             color: #2c3e50;
         }
-        
+
         input {
             width: 100%;
             padding: 12px;
@@ -55,13 +56,13 @@
             font-size: 16px;
             transition: border-color 0.3s;
         }
-        
+
         input:focus {
             border-color: #3498db;
             outline: none;
             box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
         }
-        
+
         .btn {
             display: block;
             width: 100%;
@@ -76,53 +77,53 @@
             transition: background-color 0.3s;
             margin-top: 20px;
         }
-        
+
         .btn:hover {
             background-color: #2980b9;
         }
-        
+
         .resultados {
             margin-top: 30px;
             display: none;
         }
-        
+
         .resultados h2 {
             color: #2c3e50;
             margin-bottom: 15px;
             padding-bottom: 10px;
             border-bottom: 1px solid #eee;
         }
-        
+
         .tabla-redes {
             width: 100%;
             border-collapse: collapse;
             margin-top: 15px;
             font-size: 14px;
         }
-        
+
         .tabla-redes th {
             background-color: #3498db;
             color: white;
             padding: 12px;
             text-align: left;
         }
-        
+
         .tabla-redes td {
             padding: 10px;
             border-bottom: 1px solid #eee;
         }
-        
+
         .tabla-redes tr:nth-child(even) {
             background-color: #f8f9fa;
         }
-        
+
         .error {
             color: #e74c3c;
             margin-top: 5px;
             font-size: 14px;
             display: none;
         }
-        
+
         .info {
             background-color: #e8f4fc;
             border-left: 4px solid #3498db;
@@ -130,19 +131,19 @@
             margin-bottom: 20px;
             border-radius: 0 5px 5px 0;
         }
-        
+
         .info h3 {
             margin-bottom: 10px;
             color: #2c3e50;
         }
-        
+
         .clase-info {
             display: flex;
             justify-content: space-between;
             margin-top: 15px;
             flex-wrap: wrap;
         }
-        
+
         .clase-card {
             flex: 1;
             min-width: 200px;
@@ -150,31 +151,31 @@
             padding: 15px;
             border-radius: 8px;
             text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             cursor: pointer;
             transition: all 0.3s;
         }
-        
+
         .clase-a {
             background-color: #e8f6f3;
             border-left: 4px solid #1abc9c;
         }
-        
+
         .clase-b {
             background-color: #fef9e7;
             border-left: 4px solid #f1c40f;
         }
-        
+
         .clase-c {
             background-color: #f4ecf7;
             border-left: 4px solid #9b59b6;
         }
-        
+
         .clase-activa {
             transform: scale(1.05);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-        
+
         .detalle-clase {
             margin-top: 20px;
             padding: 15px;
@@ -182,67 +183,188 @@
             border-radius: 5px;
             display: none;
         }
-        
+
         .resumen-red {
             background-color: #e8f4fc;
             padding: 15px;
             border-radius: 5px;
             margin-bottom: 20px;
         }
-        
+
         .resumen-item {
             display: flex;
             justify-content: space-between;
             margin-bottom: 8px;
         }
-        
+
         .resumen-item strong {
             color: #2c3e50;
         }
-        
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
-            
-            .tabla-redes {
-                font-size: 12px;
-            }
-            
-            .tabla-redes th, .tabla-redes td {
-                padding: 8px 5px;
-            }
-            
-            .clase-card {
-                min-width: 100%;
-            }
-        }
+
+/* Contenedor principal para la tabla */
+.tabla-contenedor {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 15px;
+    background: white;
+}
+
+/* Ajustes para la tabla en móviles */
+@media (max-width: 768px) {
+    .tabla-redes {
+        width: auto;
+        min-width: 100%;
+        font-size: 12px;
+        border-collapse: collapse;
+        margin: 0;
+    }
+    
+    .tabla-redes th,
+    .tabla-redes td {
+        padding: 10px 8px;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+        white-space: nowrap;
+        min-width: 120px;
+    }
+    
+    .tabla-redes th {
+        background-color: #3498db;
+        color: white;
+        font-weight: bold;
+        position: sticky;
+        left: 0;
+        z-index: 2;
+    }
+    
+    .tabla-redes th:first-child {
+        left: 0;
+        min-width: 80px;
+    }
+    
+    .tabla-redes td {
+        background-color: white;
+    }
+    
+    .tabla-redes tr:nth-child(even) td {
+        background-color: #f8f9fa;
+    }
+    
+    /* Eliminar cualquier espacio blanco */
+    .tabla-redes {
+        border-spacing: 0;
+    }
+    
+    .tabla-contenedor::-webkit-scrollbar {
+        height: 8px;
+    }
+    
+    .tabla-contenedor::-webkit-scrollbar-thumb {
+        background: #3498db;
+        border-radius: 4px;
+    }
+    
+    .tabla-contenedor::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+}
+
+/* Para pantallas muy pequeñas */
+@media (max-width: 480px) {
+    .tabla-redes {
+        font-size: 11px;
+    }
+    
+    .tabla-redes th,
+    .tabla-redes td {
+        padding: 8px 6px;
+        min-width: 110px;
+    }
+    
+    .tabla-redes th:first-child {
+        min-width: 60px;
+    }
+    
+    /* Columnas más importantes - ajustar tamaño */
+    .tabla-redes th:nth-child(1),
+    .tabla-redes td:nth-child(1) { /* Red # */
+        min-width: 70px;
+        max-width: 70px;
+    }
+    
+    .tabla-redes th:nth-child(2),
+    .tabla-redes td:nth-child(2) { /* Dirección de Red */
+        min-width: 130px;
+    }
+    
+    .tabla-redes th:nth-child(3),
+    .tabla-redes td:nth-child(3) { /* Primera IP Útil */
+        min-width: 130px;
+    }
+    
+    .tabla-redes th:nth-child(4),
+    .tabla-redes td:nth-child(4) { /* Última IP Útil */
+        min-width: 130px;
+    }
+    
+    .tabla-redes th:nth-child(5),
+    .tabla-redes td:nth-child(5) { /* Broadcast */
+        min-width: 130px;
+    }
+    
+    .tabla-redes th:nth-child(6),
+    .tabla-redes td:nth-child(6) { /* Máscara */
+        min-width: 140px;
+    }
+    
+    .tabla-redes th:nth-child(7),
+    .tabla-redes td:nth-child(7) { /* Hosts */
+        min-width: 90px;
+    }
+}
+
+/* Asegurar que no haya márgenes o paddings que causen espacio blanco */
+.container {
+    overflow-x: hidden;
+}
+
+.tabla-contenedor table {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>Calculadora de Rangos de Subred Optimizada</h1>
-        
+
         <div class="info">
             <h3>Instrucciones:</h3>
-            <p>Ingresa una dirección IP de red y el número de subredes que necesitas. La calculadora detectará automáticamente la clase de la red y dividirá todo el rango disponible de direcciones entre las subredes solicitadas.</p>
+            <p>Ingresa una dirección IP de red y el número de subredes que necesitas. La calculadora detectará
+                automáticamente la clase de la red y dividirá todo el rango disponible de direcciones entre las subredes
+                solicitadas.</p>
             <p><strong>Ejemplos de IP:</strong> Clase A: 10.0.0.0, Clase B: 172.16.0.0, Clase C: 192.168.1.0</p>
         </div>
-        
+
         <div class="input-group">
             <label for="IP">Dirección IP de red:</label>
             <input type="text" id="IP" placeholder="Ej: 192.168.1.0" value="192.168.1.0">
             <div class="error" id="errorIP">Por favor ingresa una dirección IP válida (ej: 192.168.1.0)</div>
         </div>
-        
+
         <div class="input-group">
             <label for="Redes">Número de subredes:</label>
             <input type="number" id="Redes" placeholder="Ej: 5" min="1" value="5">
             <div class="error" id="errorRedes">El número de subredes debe ser al menos 1</div>
         </div>
-        
+
         <button id="btnEnviar" class="btn">Calcular Rangos de Subred</button>
-        
+
         <div class="clase-info" id="claseInfo">
             <div class="clase-card clase-a" id="claseA">
                 <h3>Clase A</h3>
@@ -263,17 +385,18 @@
                 <p>Hosts posibles: 254</p>
             </div>
         </div>
-        
+
         <div class="detalle-clase" id="detalleClase">
             <!-- Se llenará dinámicamente -->
         </div>
-        
+
         <div class="resultados" id="resultados">
             <h2>Resultados</h2>
             <div id="infoResultados"></div>
             <div class="resumen-red" id="resumenRed">
                 <!-- Se llenará dinámicamente -->
             </div>
+            <div class="tabla-contenedor">
             <table class="tabla-redes" id="tablaRedes">
                 <thead>
                     <tr>
@@ -290,18 +413,19 @@
                     <!-- Las filas se generarán dinámicamente -->
                 </tbody>
             </table>
+            </div>
         </div>
     </div>
 
     <script>
-        document.getElementById('btnEnviar').addEventListener('click', function() {
+        document.getElementById('btnEnviar').addEventListener('click', function () {
             // Obtener valores de los inputs
             const ip = document.getElementById('IP').value.trim();
             const redes = parseInt(document.getElementById('Redes').value);
-            
+
             // Validar entradas
             let hayErrores = false;
-            
+
             // Validar IP
             const ipValida = validarIP(ip);
             if (!ipValida) {
@@ -310,7 +434,7 @@
             } else {
                 document.getElementById('errorIP').style.display = 'none';
             }
-            
+
             // Validar redes
             if (isNaN(redes) || redes < 1) {
                 document.getElementById('errorRedes').style.display = 'block';
@@ -318,33 +442,33 @@
             } else {
                 document.getElementById('errorRedes').style.display = 'none';
             }
-            
+
             // Si hay errores, no continuar
             if (hayErrores) {
                 return;
             }
-            
+
             // Detectar clase de red y calcular rangos
             const clase = detectarClaseIP(ip);
             calcularRangosSubred(ip, redes, clase);
         });
-        
+
         function validarIP(ip) {
             const patronIP = /^(\d{1,3}\.){3}\d{1,3}$/;
             if (!patronIP.test(ip)) return false;
-            
+
             const octetos = ip.split('.');
             for (let i = 0; i < 4; i++) {
                 const octeto = parseInt(octetos[i]);
                 if (octeto < 0 || octeto > 255) return false;
             }
-            
+
             return true;
         }
-        
+
         function detectarClaseIP(ip) {
             const primerOcteto = parseInt(ip.split('.')[0]);
-            
+
             if (primerOcteto >= 1 && primerOcteto <= 126) {
                 return 'A';
             } else if (primerOcteto >= 128 && primerOcteto <= 191) {
@@ -359,13 +483,13 @@
                 return 'Desconocida';
             }
         }
-        
+
         function calcularRangosSubred(ipBase, numRedes, clase) {
             // Resaltar la clase detectada
             document.querySelectorAll('.clase-card').forEach(card => {
                 card.classList.remove('clase-activa');
             });
-            
+
             if (clase === 'A') {
                 document.getElementById('claseA').classList.add('clase-activa');
             } else if (clase === 'B') {
@@ -373,13 +497,13 @@
             } else if (clase === 'C') {
                 document.getElementById('claseC').classList.add('clase-activa');
             }
-            
+
             // Mostrar detalles de la clase
             const detalleClase = document.getElementById('detalleClase');
             let mascaraPorDefecto = '';
             let bitsRedPorDefecto = 0;
             let hostsTotales = 0;
-            
+
             if (clase === 'A') {
                 mascaraPorDefecto = '255.0.0.0';
                 bitsRedPorDefecto = 8;
@@ -393,7 +517,7 @@
                 bitsRedPorDefecto = 24;
                 hostsTotales = Math.pow(2, 8) - 2; // 254 hosts
             }
-            
+
             detalleClase.innerHTML = `
                 <h3>Información de la Clase ${clase}</h3>
                 <p><strong>IP ingresada:</strong> ${ipBase}</p>
@@ -404,10 +528,10 @@
                 <p><strong>Hosts totales disponibles:</strong> ${hostsTotales.toLocaleString()}</p>
             `;
             detalleClase.style.display = 'block';
-            
+
             // Calcular bits necesarios para las subredes
             const bitsSubred = Math.ceil(Math.log2(numRedes));
-            
+
             // Verificar si es posible crear las subredes solicitadas
             const bitsHostDisponibles = 32 - bitsRedPorDefecto;
             if (bitsSubred > bitsHostDisponibles) {
@@ -416,31 +540,31 @@
                 Has solicitado ${numRedes} subredes, que requieren ${bitsSubred} bits, pero solo hay ${bitsHostDisponibles} bits disponibles.`);
                 return;
             }
-            
+
             // Calcular hosts por subred
             const bitsHostsPorSubred = bitsHostDisponibles - bitsSubred;
             const hostsPorSubred = Math.pow(2, bitsHostsPorSubred) - 2; // Restar red y broadcast
-            
+
             // Calcular máscara de subred personalizada
             const bitsRedPersonalizada = bitsRedPorDefecto + bitsSubred;
             const mascaraPersonalizada = calcularMascara(bitsRedPersonalizada);
-            
+
             // Calcular tamaño de bloque por subred
             const tamañoBloque = Math.pow(2, bitsHostsPorSubred);
-            
+
             // Convertir IP base a número decimal
             const ipBaseDecimal = ipADecimal(ipBase);
-            
+
             // Generar tabla de resultados
             const cuerpoTabla = document.getElementById('cuerpoTabla');
             cuerpoTabla.innerHTML = '';
-            
+
             // Información adicional
             document.getElementById('infoResultados').innerHTML = `
                 <h3>Resumen de la División de Subredes</h3>
                 <p>Se han creado ${numRedes} subredes a partir de la red ${ipBase} (Clase ${clase})</p>
             `;
-            
+
             // Resumen de la red
             document.getElementById('resumenRed').innerHTML = `
                 <div class="resumen-item">
@@ -462,21 +586,21 @@
                     <strong>Total de hosts utilizables:</strong> <span>${(hostsPorSubred * numRedes).toLocaleString()}</span>
                 </div>
             `;
-            
+
             // Generar información para cada subred
             for (let i = 0; i < numRedes; i++) {
                 const direccionRed = ipBaseDecimal + i * tamañoBloque;
-                
+
                 // Verificar que no nos salgamos del rango de direcciones válidas
                 if ((direccionRed >>> 24) > 223 || (direccionRed >>> 24) < 1) {
                     alert(`Advertencia: Has excedido el rango de direcciones IP válidas. Solo se mostrarán las primeras ${i} subredes.`);
                     break;
                 }
-                
+
                 const primeraIPUtil = direccionRed + 1;
                 const ultimaIPUtil = direccionRed + tamañoBloque - 2;
                 const direccionBroadcast = direccionRed + tamañoBloque - 1;
-                
+
                 // Crear fila de tabla
                 const fila = document.createElement('tr');
                 fila.innerHTML = `
@@ -490,26 +614,26 @@
                 `;
                 cuerpoTabla.appendChild(fila);
             }
-            
+
             // Mostrar resultados
             document.getElementById('resultados').style.display = 'block';
         }
-        
+
         function ipADecimal(ip) {
             const octetos = ip.split('.');
-            return (parseInt(octetos[0]) << 24) + 
-                   (parseInt(octetos[1]) << 16) + 
-                   (parseInt(octetos[2]) << 8) + 
-                   parseInt(octetos[3]);
+            return (parseInt(octetos[0]) << 24) +
+                (parseInt(octetos[1]) << 16) +
+                (parseInt(octetos[2]) << 8) +
+                parseInt(octetos[3]);
         }
-        
+
         function decimalAIP(decimal) {
-            return [(decimal >>> 24) & 255, 
-                    (decimal >>> 16) & 255, 
-                    (decimal >>> 8) & 255, 
-                    decimal & 255].join('.');
+            return [(decimal >>> 24) & 255,
+            (decimal >>> 16) & 255,
+            (decimal >>> 8) & 255,
+            decimal & 255].join('.');
         }
-        
+
         function calcularMascara(bitsRed) {
             let mascara = 0;
             for (let i = 0; i < bitsRed; i++) {
@@ -519,4 +643,5 @@
         }
     </script>
 </body>
+
 </html>
