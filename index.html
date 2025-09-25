@@ -201,141 +201,148 @@
             color: #2c3e50;
         }
 
-/* Contenedor principal para la tabla */
-.tabla-contenedor {
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin-top: 15px;
-    background: white;
-}
+        /* Contenedor principal para la tabla */
+        .tabla-contenedor {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-top: 15px;
+            background: white;
+        }
 
-/* Ajustes para la tabla en móviles */
-@media (max-width: 768px) {
-    .tabla-redes {
-        width: auto;
-        min-width: 100%;
-        font-size: 12px;
-        border-collapse: collapse;
-        margin: 0;
-    }
-    
-    .tabla-redes th,
-    .tabla-redes td {
-        padding: 10px 8px;
-        text-align: left;
-        border-bottom: 1px solid #eee;
-        white-space: nowrap;
-        min-width: 120px;
-    }
-    
-    .tabla-redes th {
-        background-color: #3498db;
-        color: white;
-        font-weight: bold;
-        position: sticky;
-        left: 0;
-        z-index: 2;
-    }
-    
-    .tabla-redes th:first-child {
-        left: 0;
-        min-width: 80px;
-    }
-    
-    .tabla-redes td {
-        background-color: white;
-    }
-    
-    .tabla-redes tr:nth-child(even) td {
-        background-color: #f8f9fa;
-    }
-    
-    /* Eliminar cualquier espacio blanco */
-    .tabla-redes {
-        border-spacing: 0;
-    }
-    
-    .tabla-contenedor::-webkit-scrollbar {
-        height: 8px;
-    }
-    
-    .tabla-contenedor::-webkit-scrollbar-thumb {
-        background: #3498db;
-        border-radius: 4px;
-    }
-    
-    .tabla-contenedor::-webkit-scrollbar-track {
-        background: #f1f1f1;
-    }
-}
+        /* Ajustes para la tabla en móviles */
+        @media (max-width: 768px) {
+            .tabla-redes {
+                width: auto;
+                min-width: 100%;
+                font-size: 12px;
+                border-collapse: collapse;
+                margin: 0;
+            }
 
-/* Para pantallas muy pequeñas */
-@media (max-width: 480px) {
-    .tabla-redes {
-        font-size: 11px;
-    }
-    
-    .tabla-redes th,
-    .tabla-redes td {
-        padding: 8px 6px;
-        min-width: 110px;
-    }
-    
-    .tabla-redes th:first-child {
-        min-width: 60px;
-    }
-    
-    /* Columnas más importantes - ajustar tamaño */
-    .tabla-redes th:nth-child(1),
-    .tabla-redes td:nth-child(1) { /* Red # */
-        min-width: 70px;
-        max-width: 70px;
-    }
-    
-    .tabla-redes th:nth-child(2),
-    .tabla-redes td:nth-child(2) { /* Dirección de Red */
-        min-width: 130px;
-    }
-    
-    .tabla-redes th:nth-child(3),
-    .tabla-redes td:nth-child(3) { /* Primera IP Útil */
-        min-width: 130px;
-    }
-    
-    .tabla-redes th:nth-child(4),
-    .tabla-redes td:nth-child(4) { /* Última IP Útil */
-        min-width: 130px;
-    }
-    
-    .tabla-redes th:nth-child(5),
-    .tabla-redes td:nth-child(5) { /* Broadcast */
-        min-width: 130px;
-    }
-    
-    .tabla-redes th:nth-child(6),
-    .tabla-redes td:nth-child(6) { /* Máscara */
-        min-width: 140px;
-    }
-    
-    .tabla-redes th:nth-child(7),
-    .tabla-redes td:nth-child(7) { /* Hosts */
-        min-width: 90px;
-    }
-}
+            .tabla-redes th,
+            .tabla-redes td {
+                padding: 10px 8px;
+                text-align: left;
+                border-bottom: 1px solid #eee;
+                white-space: nowrap;
+                min-width: 120px;
+            }
 
-/* Asegurar que no haya márgenes o paddings que causen espacio blanco */
-.container {
-    overflow-x: hidden;
-}
+            .tabla-redes th {
+                background-color: #3498db;
+                color: white;
+                font-weight: bold;
+                position: sticky;
+                left: 0;
+                z-index: 2;
+            }
 
-.tabla-contenedor table {
-    margin: 0;
-    padding: 0;
-    border: 0;
-}
+            .tabla-redes th:first-child {
+                left: 0;
+                min-width: 80px;
+            }
+
+            .tabla-redes td {
+                background-color: white;
+            }
+
+            .tabla-redes tr:nth-child(even) td {
+                background-color: #f8f9fa;
+            }
+
+            /* Eliminar cualquier espacio blanco */
+            .tabla-redes {
+                border-spacing: 0;
+            }
+
+            .tabla-contenedor::-webkit-scrollbar {
+                height: 8px;
+            }
+
+            .tabla-contenedor::-webkit-scrollbar-thumb {
+                background: #3498db;
+                border-radius: 4px;
+            }
+
+            .tabla-contenedor::-webkit-scrollbar-track {
+                background: #f1f1f1;
+            }
+        }
+
+        /* Para pantallas muy pequeñas */
+        @media (max-width: 480px) {
+            .tabla-redes {
+                font-size: 11px;
+            }
+
+            .tabla-redes th,
+            .tabla-redes td {
+                padding: 8px 6px;
+                min-width: 110px;
+            }
+
+            .tabla-redes th:first-child {
+                min-width: 60px;
+            }
+
+            /* Columnas más importantes - ajustar tamaño */
+            .tabla-redes th:nth-child(1),
+            .tabla-redes td:nth-child(1) {
+                /* Red # */
+                min-width: 70px;
+                max-width: 70px;
+            }
+
+            .tabla-redes th:nth-child(2),
+            .tabla-redes td:nth-child(2) {
+                /* Dirección de Red */
+                min-width: 130px;
+            }
+
+            .tabla-redes th:nth-child(3),
+            .tabla-redes td:nth-child(3) {
+                /* Primera IP Útil */
+                min-width: 130px;
+            }
+
+            .tabla-redes th:nth-child(4),
+            .tabla-redes td:nth-child(4) {
+                /* Última IP Útil */
+                min-width: 130px;
+            }
+
+            .tabla-redes th:nth-child(5),
+            .tabla-redes td:nth-child(5) {
+                /* Broadcast */
+                min-width: 130px;
+            }
+
+            .tabla-redes th:nth-child(6),
+            .tabla-redes td:nth-child(6) {
+                /* Máscara */
+                min-width: 140px;
+            }
+
+            .tabla-redes th:nth-child(7),
+            .tabla-redes td:nth-child(7) {
+                /* Hosts */
+                min-width: 90px;
+            }
+        }
+
+        /* Asegurar que no haya márgenes o paddings que causen espacio blanco */
+        .container {
+            overflow-x: hidden;
+        }
+
+        .tabla-contenedor table {
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
     </style>
 </head>
 
@@ -353,13 +360,13 @@
 
         <div class="input-group">
             <label for="IP">Dirección IP de red:</label>
-            <input type="text" id="IP" placeholder="Ej: 192.168.1.0" value="192.168.1.0">
+            <input type="text" id="IP" placeholder="Ej: 192.168.1.0">
             <div class="error" id="errorIP">Por favor ingresa una dirección IP válida (ej: 192.168.1.0)</div>
         </div>
 
         <div class="input-group">
             <label for="Redes">Número de subredes:</label>
-            <input type="number" id="Redes" placeholder="Ej: 5" min="1" value="5">
+            <input type="number" id="Redes" placeholder="Ej: 5" min="1">
             <div class="error" id="errorRedes">El número de subredes debe ser al menos 1</div>
         </div>
 
@@ -397,22 +404,22 @@
                 <!-- Se llenará dinámicamente -->
             </div>
             <div class="tabla-contenedor">
-            <table class="tabla-redes" id="tablaRedes">
-                <thead>
-                    <tr>
-                        <th>Subred #</th>
-                        <th>Dirección de Red</th>
-                        <th>Primera IP Útil</th>
-                        <th>Última IP Útil</th>
-                        <th>Dirección de Broadcast</th>
-                        <th>Máscara de Subred</th>
-                        <th>Hosts Disponibles</th>
-                    </tr>
-                </thead>
-                <tbody id="cuerpoTabla">
-                    <!-- Las filas se generarán dinámicamente -->
-                </tbody>
-            </table>
+                <table class="tabla-redes" id="tablaRedes">
+                    <thead>
+                        <tr>
+                            <th>Subred #</th>
+                            <th>Dirección de Red</th>
+                            <th>Primera IP Útil</th>
+                            <th>Última IP Útil</th>
+                            <th>Dirección de Broadcast</th>
+                            <th>Máscara de Subred</th>
+                            <th>Hosts Disponibles</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpoTabla">
+                        <!-- Las filas se generarán dinámicamente -->
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
