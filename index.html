@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Rangos de Subred Optimizada</title>
     <style>
+        /* RESET Y ESTILOS GENERALES */
+        /* Aplicamos box-sizing border-box a todos los elementos para un cálculo más predecible de dimensiones */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -13,6 +14,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        /* Estilos para el cuerpo de la página */
         body {
             background-color: #f5f7fa;
             color: #333;
@@ -20,6 +22,7 @@
             padding: 20px;
         }
 
+        /* Contenedor principal que centra el contenido y le da estilo de tarjeta */
         .container {
             max-width: 1000px;
             margin: 0 auto;
@@ -29,6 +32,7 @@
             padding: 30px;
         }
 
+        /* ESTILOS DE TIPOGRAFÍA Y ENCABEZADOS */
         h1 {
             text-align: center;
             color: #2c3e50;
@@ -37,6 +41,7 @@
             border-bottom: 2px solid #3498db;
         }
 
+        /* ESTILOS DE FORMULARIO Y ENTRADAS */
         .input-group {
             margin-bottom: 20px;
         }
@@ -57,12 +62,14 @@
             transition: border-color 0.3s;
         }
 
+        /* Efecto de foco en los inputs */
         input:focus {
             border-color: #3498db;
             outline: none;
             box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
         }
 
+        /* ESTILOS DE BOTONES */
         .btn {
             display: block;
             width: 100%;
@@ -82,9 +89,10 @@
             background-color: #2980b9;
         }
 
+        /* ESTILOS DE RESULTADOS */
         .resultados {
             margin-top: 30px;
-            display: none;
+            display: none; /* Oculto inicialmente */
         }
 
         .resultados h2 {
@@ -94,6 +102,7 @@
             border-bottom: 1px solid #eee;
         }
 
+        /* ESTILOS DE TABLA */
         .tabla-redes {
             width: 100%;
             border-collapse: collapse;
@@ -113,15 +122,17 @@
             border-bottom: 1px solid #eee;
         }
 
+        /* Filas pares con color de fondo alternativo para mejor legibilidad */
         .tabla-redes tr:nth-child(even) {
             background-color: #f8f9fa;
         }
 
+        /* ESTILOS DE MENSAJES DE ERROR E INFORMACIÓN */
         .error {
             color: #e74c3c;
             margin-top: 5px;
             font-size: 14px;
-            display: none;
+            display: none; /* Oculto inicialmente */
         }
 
         .info {
@@ -137,6 +148,7 @@
             color: #2c3e50;
         }
 
+        /* ESTILOS DE INFORMACIÓN DE CLASES DE RED */
         .clase-info {
             display: flex;
             justify-content: space-between;
@@ -156,6 +168,7 @@
             transition: all 0.3s;
         }
 
+        /* Colores específicos para cada clase de red */
         .clase-a {
             background-color: #e8f6f3;
             border-left: 4px solid #1abc9c;
@@ -171,6 +184,7 @@
             border-left: 4px solid #9b59b6;
         }
 
+        /* Efecto de tarjeta activa */
         .clase-activa {
             transform: scale(1.05);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -181,9 +195,10 @@
             padding: 15px;
             background-color: #f8f9fa;
             border-radius: 5px;
-            display: none;
+            display: none; /* Oculto inicialmente */
         }
 
+        /* ESTILOS DE RESUMEN DE RED */
         .resumen-red {
             background-color: #e8f4fc;
             padding: 15px;
@@ -201,7 +216,7 @@
             color: #2c3e50;
         }
 
-        /* Contenedor principal para la tabla */
+        /* CONTENEDOR PARA TABLA RESPONSIVA */
         .tabla-contenedor {
             width: 100%;
             overflow-x: auto;
@@ -212,7 +227,8 @@
             background: white;
         }
 
-        /* Ajustes para la tabla en móviles */
+        /* MEDIA QUERIES PARA DISEÑO RESPONSIVE */
+        /* Estilos para tablets y móviles (hasta 768px) */
         @media (max-width: 768px) {
             .tabla-redes {
                 width: auto;
@@ -258,6 +274,7 @@
                 border-spacing: 0;
             }
 
+            /* Personalización de la barra de desplazamiento */
             .tabla-contenedor::-webkit-scrollbar {
                 height: 8px;
             }
@@ -272,7 +289,7 @@
             }
         }
 
-        /* Para pantallas muy pequeñas */
+        /* Para pantallas muy pequeñas (hasta 480px) */
         @media (max-width: 480px) {
             .tabla-redes {
                 font-size: 11px;
@@ -288,7 +305,7 @@
                 min-width: 60px;
             }
 
-            /* Columnas más importantes - ajustar tamaño */
+            /* Ajustes específicos de ancho para cada columna en móviles */
             .tabla-redes th:nth-child(1),
             .tabla-redes td:nth-child(1) {
                 /* Red # */
@@ -350,6 +367,7 @@
     <div class="container">
         <h1>Calculadora de Rangos de Subred Optimizada</h1>
 
+        <!-- Sección de instrucciones para el usuario -->
         <div class="info">
             <h3>Instrucciones:</h3>
             <p>Ingresa una dirección IP de red y el número de subredes que necesitas. La calculadora detectará
@@ -358,6 +376,7 @@
             <p><strong>Ejemplos de IP:</strong> Clase A: 10.0.0.0, Clase B: 172.16.0.0, Clase C: 192.168.1.0</p>
         </div>
 
+        <!-- Formulario de entrada de datos -->
         <div class="input-group">
             <label for="IP">Dirección IP de red:</label>
             <input type="text" id="IP" placeholder="Ej: 192.168.1.0">
@@ -370,8 +389,10 @@
             <div class="error" id="errorRedes">El número de subredes debe ser al menos 1</div>
         </div>
 
+        <!-- Botón para ejecutar el cálculo -->
         <button id="btnEnviar" class="btn">Calcular Rangos de Subred</button>
 
+        <!-- Información sobre las clases de red -->
         <div class="clase-info" id="claseInfo">
             <div class="clase-card clase-a" id="claseA">
                 <h3>Clase A</h3>
@@ -393,15 +414,17 @@
             </div>
         </div>
 
+        <!-- Sección para mostrar detalles de la clase detectada -->
         <div class="detalle-clase" id="detalleClase">
-            <!-- Se llenará dinámicamente -->
+            <!-- Se llenará dinámicamente con JavaScript -->
         </div>
 
+        <!-- Sección de resultados (inicialmente oculta) -->
         <div class="resultados" id="resultados">
             <h2>Resultados</h2>
             <div id="infoResultados"></div>
             <div class="resumen-red" id="resumenRed">
-                <!-- Se llenará dinámicamente -->
+                <!-- Se llenará dinámicamente con JavaScript -->
             </div>
             <div class="tabla-contenedor">
                 <table class="tabla-redes" id="tablaRedes">
@@ -417,7 +440,7 @@
                         </tr>
                     </thead>
                     <tbody id="cuerpoTabla">
-                        <!-- Las filas se generarán dinámicamente -->
+                        <!-- Las filas se generarán dinámicamente con JavaScript -->
                     </tbody>
                 </table>
             </div>
@@ -425,6 +448,7 @@
     </div>
 
     <script>
+        // Agregar evento al botón para iniciar el cálculo
         document.getElementById('btnEnviar').addEventListener('click', function () {
             // Obtener valores de los inputs
             const ip = document.getElementById('IP').value.trim();
@@ -433,7 +457,7 @@
             // Validar entradas
             let hayErrores = false;
 
-            // Validar IP
+            // Validar IP usando la función validarIP
             const ipValida = validarIP(ip);
             if (!ipValida) {
                 document.getElementById('errorIP').style.display = 'block';
@@ -442,7 +466,7 @@
                 document.getElementById('errorIP').style.display = 'none';
             }
 
-            // Validar redes
+            // Validar número de redes
             if (isNaN(redes) || redes < 1) {
                 document.getElementById('errorRedes').style.display = 'block';
                 hayErrores = true;
@@ -450,7 +474,7 @@
                 document.getElementById('errorRedes').style.display = 'none';
             }
 
-            // Si hay errores, no continuar
+            // Si hay errores, no continuar con el cálculo
             if (hayErrores) {
                 return;
             }
@@ -460,10 +484,17 @@
             calcularRangosSubred(ip, redes, clase);
         });
 
+        /**
+         * Valida si una cadena es una dirección IP válida
+         * @param {string} ip - Dirección IP a validar
+         * @returns {boolean} - True si la IP es válida, false en caso contrario
+         */
         function validarIP(ip) {
+            // Patrón regex para validar formato de IP (4 octetos separados por puntos)
             const patronIP = /^(\d{1,3}\.){3}\d{1,3}$/;
             if (!patronIP.test(ip)) return false;
 
+            // Verificar que cada octeto esté en el rango válido (0-255)
             const octetos = ip.split('.');
             for (let i = 0; i < 4; i++) {
                 const octeto = parseInt(octetos[i]);
@@ -473,9 +504,15 @@
             return true;
         }
 
+        /**
+         * Detecta la clase de una dirección IP basándose en su primer octeto
+         * @param {string} ip - Dirección IP a analizar
+         * @returns {string} - Letra que representa la clase (A, B, C, D, E)
+         */
         function detectarClaseIP(ip) {
             const primerOcteto = parseInt(ip.split('.')[0]);
 
+            // Clasificación según RFC 791
             if (primerOcteto >= 1 && primerOcteto <= 126) {
                 return 'A';
             } else if (primerOcteto >= 128 && primerOcteto <= 191) {
@@ -491,8 +528,14 @@
             }
         }
 
+        /**
+         * Calcula y muestra los rangos de subred para una IP y número de redes dados
+         * @param {string} ipBase - Dirección IP base de la red
+         * @param {number} numRedes - Número de subredes a crear
+         * @param {string} clase - Clase de la red (A, B, C)
+         */
         function calcularRangosSubred(ipBase, numRedes, clase) {
-            // Resaltar la clase detectada
+            // Resaltar visualmente la clase detectada
             document.querySelectorAll('.clase-card').forEach(card => {
                 card.classList.remove('clase-activa');
             });
@@ -505,68 +548,54 @@
                 document.getElementById('claseC').classList.add('clase-activa');
             }
 
-            // Mostrar detalles de la clase
+            // Mostrar detalles de la clase detectada
             const detalleClase = document.getElementById('detalleClase');
             let mascaraPorDefecto = '';
-            let bitsRedPorDefecto = 0;
             let hostsTotales = 0;
 
+            // Asignar valores según la clase de red
             if (clase === 'A') {
                 mascaraPorDefecto = '255.0.0.0';
-                bitsRedPorDefecto = 8;
-                hostsTotales = Math.pow(2, 24) - 2; // 16,777,214 hosts
+                hostsTotales = 16777214; // 2^24 - 2
             } else if (clase === 'B') {
                 mascaraPorDefecto = '255.255.0.0';
-                bitsRedPorDefecto = 16;
-                hostsTotales = Math.pow(2, 16) - 2; // 65,534 hosts
+                hostsTotales = 65534; // 2^16 - 2
             } else if (clase === 'C') {
                 mascaraPorDefecto = '255.255.255.0';
-                bitsRedPorDefecto = 24;
-                hostsTotales = Math.pow(2, 8) - 2; // 254 hosts
+                hostsTotales = 254; // 2^8 - 2
             }
 
+            // Mostrar información de la clase
             detalleClase.innerHTML = `
                 <h3>Información de la Clase ${clase}</h3>
                 <p><strong>IP ingresada:</strong> ${ipBase}</p>
                 <p><strong>Clase detectada:</strong> ${clase}</p>
                 <p><strong>Máscara por defecto:</strong> ${mascaraPorDefecto}</p>
-                <p><strong>Bits de red por defecto:</strong> ${bitsRedPorDefecto}</p>
-                <p><strong>Bits de host por defecto:</strong> ${32 - bitsRedPorDefecto}</p>
                 <p><strong>Hosts totales disponibles:</strong> ${hostsTotales.toLocaleString()}</p>
             `;
             detalleClase.style.display = 'block';
 
-            // Calcular bits necesarios para las subredes
-            const bitsSubred = Math.ceil(Math.log2(numRedes));
+            // Cálculo de hosts por subred
+            // NOTA: No restamos los 2 hosts aquí porque estamos calculando el tamaño total del bloque
+            const hostsPorSubred = Math.round(hostsTotales / numRedes);
+            const tamañoBloque = hostsPorSubred;
+            
+            // Los hosts realmente utilizables son hostsPorSubred - 2 (sin contar red y broadcast)
+            const hostsUtilizablesPorSubred = hostsPorSubred - 2;
+            const totalHostsUtilizados = hostsUtilizablesPorSubred * numRedes;
+            const hostsLibres = hostsTotales - (hostsPorSubred * numRedes);
 
-            // Verificar si es posible crear las subredes solicitadas
-            const bitsHostDisponibles = 32 - bitsRedPorDefecto;
-            if (bitsSubred > bitsHostDisponibles) {
-                const maxRedes = Math.pow(2, bitsHostDisponibles);
-                alert(`Error: La clase ${clase} solo permite crear hasta ${maxRedes} subredes. 
-                Has solicitado ${numRedes} subredes, que requieren ${bitsSubred} bits, pero solo hay ${bitsHostDisponibles} bits disponibles.`);
-                return;
-            }
+            // Usar máscara básica según la clase
+            let mascaraPersonalizada = mascaraPorDefecto;
 
-            // Calcular hosts por subred
-            const bitsHostsPorSubred = bitsHostDisponibles - bitsSubred;
-            const hostsPorSubred = Math.pow(2, bitsHostsPorSubred) - 2; // Restar red y broadcast
-
-            // Calcular máscara de subred personalizada
-            const bitsRedPersonalizada = bitsRedPorDefecto + bitsSubred;
-            const mascaraPersonalizada = calcularMascara(bitsRedPersonalizada);
-
-            // Calcular tamaño de bloque por subred
-            const tamañoBloque = Math.pow(2, bitsHostsPorSubred);
-
-            // Convertir IP base a número decimal
+            // Convertir IP base a número decimal para facilitar cálculos
             const ipBaseDecimal = ipADecimal(ipBase);
 
             // Generar tabla de resultados
             const cuerpoTabla = document.getElementById('cuerpoTabla');
             cuerpoTabla.innerHTML = '';
 
-            // Información adicional
+            // Información adicional sobre la división
             document.getElementById('infoResultados').innerHTML = `
                 <h3>Resumen de la División de Subredes</h3>
                 <p>Se han creado ${numRedes} subredes a partir de la red ${ipBase} (Clase ${clase})</p>
@@ -581,34 +610,37 @@
                     <strong>Clase de red:</strong> <span>${clase}</span>
                 </div>
                 <div class="resumen-item">
-                    <strong>Número de subredes creadas:</strong> <span>${numRedes}</span>
+                    <strong>Número de subredes:</strong> <span>${numRedes}</span>
                 </div>
                 <div class="resumen-item">
-                    <strong>Hosts por subred:</strong> <span>${hostsPorSubred}</span>
+                    <strong>Hosts por subred (total):</strong> <span>${hostsPorSubred}</span>
                 </div>
                 <div class="resumen-item">
-                    <strong>Máscara de subred:</strong> <span>${mascaraPersonalizada} (/${bitsRedPersonalizada})</span>
+                    <strong>Hosts utilizables por subred:</strong> <span>${hostsUtilizablesPorSubred}</span>
                 </div>
                 <div class="resumen-item">
-                    <strong>Total de hosts utilizables:</strong> <span>${(hostsPorSubred * numRedes).toLocaleString()}</span>
+                    <strong>Total hosts utilizables:</strong> <span>${totalHostsUtilizados.toLocaleString()}</span>
+                </div>
+                <div class="resumen-item">
+                    <strong>Hosts reservados (red+broadcast):</strong> <span>${2 * numRedes}</span>
+                </div>
+                <div class="resumen-item">
+                    <strong>Hosts libres/sin usar:</strong> <span>${hostsLibres >= 0 ? hostsLibres.toLocaleString() : 0}</span>
+                </div>
+                <div class="resumen-item">
+                    <strong>Máscara de subred:</strong> <span>${mascaraPersonalizada}</span>
                 </div>
             `;
 
-            // Generar información para cada subred
+            // Generar información para cada subred individual
             for (let i = 0; i < numRedes; i++) {
+                // Calcular direcciones para cada subred
                 const direccionRed = ipBaseDecimal + i * tamañoBloque;
-
-                // Verificar que no nos salgamos del rango de direcciones válidas
-                if ((direccionRed >>> 24) > 223 || (direccionRed >>> 24) < 1) {
-                    alert(`Advertencia: Has excedido el rango de direcciones IP válidas. Solo se mostrarán las primeras ${i} subredes.`);
-                    break;
-                }
-
                 const primeraIPUtil = direccionRed + 1;
                 const ultimaIPUtil = direccionRed + tamañoBloque - 2;
                 const direccionBroadcast = direccionRed + tamañoBloque - 1;
 
-                // Crear fila de tabla
+                // Crear fila de tabla con la información de la subred
                 const fila = document.createElement('tr');
                 fila.innerHTML = `
                     <td>${i + 1}</td>
@@ -617,15 +649,20 @@
                     <td>${decimalAIP(ultimaIPUtil)}</td>
                     <td>${decimalAIP(direccionBroadcast)}</td>
                     <td>${mascaraPersonalizada}</td>
-                    <td>${hostsPorSubred}</td>
+                    <td>${hostsUtilizablesPorSubred}</td>
                 `;
                 cuerpoTabla.appendChild(fila);
             }
 
-            // Mostrar resultados
+            // Mostrar la sección de resultados
             document.getElementById('resultados').style.display = 'block';
         }
 
+        /**
+         * Convierte una dirección IP en formato string a un número decimal
+         * @param {string} ip - Dirección IP en formato "a.b.c.d"
+         * @returns {number} - Representación decimal de la IP
+         */
         function ipADecimal(ip) {
             const octetos = ip.split('.');
             return (parseInt(octetos[0]) << 24) +
@@ -634,21 +671,17 @@
                 parseInt(octetos[3]);
         }
 
+        /**
+         * Convierte un número decimal a una dirección IP en formato string
+         * @param {number} decimal - Número decimal que representa una IP
+         * @returns {string} - Dirección IP en formato "a.b.c.d"
+         */
         function decimalAIP(decimal) {
             return [(decimal >>> 24) & 255,
             (decimal >>> 16) & 255,
             (decimal >>> 8) & 255,
             decimal & 255].join('.');
         }
-
-        function calcularMascara(bitsRed) {
-            let mascara = 0;
-            for (let i = 0; i < bitsRed; i++) {
-                mascara |= (1 << (31 - i));
-            }
-            return decimalAIP(mascara);
-        }
     </script>
 </body>
-
 </html>
