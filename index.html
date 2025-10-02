@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -92,7 +93,8 @@
         /* ESTILOS DE RESULTADOS */
         .resultados {
             margin-top: 30px;
-            display: none; /* Oculto inicialmente */
+            display: none;
+            /* Oculto inicialmente */
         }
 
         .resultados h2 {
@@ -132,7 +134,8 @@
             color: #e74c3c;
             margin-top: 5px;
             font-size: 14px;
-            display: none; /* Oculto inicialmente */
+            display: none;
+            /* Oculto inicialmente */
         }
 
         .info {
@@ -195,7 +198,8 @@
             padding: 15px;
             background-color: #f8f9fa;
             border-radius: 5px;
-            display: none; /* Oculto inicialmente */
+            display: none;
+            /* Oculto inicialmente */
         }
 
         /* ESTILOS DE RESUMEN DE RED */
@@ -446,7 +450,6 @@
             </div>
         </div>
     </div>
-
     <script>
         // Agregar evento al botón para iniciar el cálculo
         document.getElementById('btnEnviar').addEventListener('click', function () {
@@ -548,24 +551,26 @@
                 document.getElementById('claseC').classList.add('clase-activa');
             }
 
-            // Mostrar detalles de la clase detectada
+            // Mostrar detalles de la clase
             const detalleClase = document.getElementById('detalleClase');
             let mascaraPorDefecto = '';
+            let bitsRedPorDefecto = 0;
             let hostsTotales = 0;
 
-            // Asignar valores según la clase de red
             if (clase === 'A') {
                 mascaraPorDefecto = '255.0.0.0';
-                hostsTotales = 16777214; // 2^24 - 2
+                bitsRedPorDefecto = 8;
+                hostsTotales = 16777214;
             } else if (clase === 'B') {
                 mascaraPorDefecto = '255.255.0.0';
-                hostsTotales = 65534; // 2^16 - 2
+                bitsRedPorDefecto = 16;
+                hostsTotales = 65534;
             } else if (clase === 'C') {
                 mascaraPorDefecto = '255.255.255.0';
-                hostsTotales = 254; // 2^8 - 2
+                bitsRedPorDefecto = 24;
+                hostsTotales = 254;
             }
 
-            // Mostrar información de la clase
             detalleClase.innerHTML = `
                 <h3>Información de la Clase ${clase}</h3>
                 <p><strong>IP ingresada:</strong> ${ipBase}</p>
@@ -575,30 +580,60 @@
             `;
             detalleClase.style.display = 'block';
 
-            // Cálculo de hosts por subred
-            // NOTA: No restamos los 2 hosts aquí porque estamos calculando el tamaño total del bloque
-            const hostsPorSubred = Math.round(hostsTotales / numRedes);
-            const tamañoBloque = hostsPorSubred;
-            
-            // Los hosts realmente utilizables son hostsPorSubred - 2 (sin contar red y broadcast)
-            const hostsUtilizablesPorSubred = hostsPorSubred - 2;
-            const totalHostsUtilizados = hostsUtilizablesPorSubred * numRedes;
-            const hostsLibres = hostsTotales - (hostsPorSubred * numRedes);
+            // FÓRMULA CORRECTA DE SUBNETTING
+            const bitsSubred = Math.ceil(Math.log2(numRedes));
+            const subredesPosibles = Math.pow(2, bitsSubred);
+            const subredesNoUsadas = subredesPosibles - numRedes;
 
-            // Usar máscara básica según la clase
-            let mascaraPersonalizada = mascaraPorDefecto;
+            // Calcular máscara de subred y CIDR
+            const bitsRedPersonalizada = bitsRedPorDefecto + bitsSubred;
+            const mascaraPersonalizada = calcularMascara(bitsRedPersonalizada);
+            const cidr = `/${bitsRedPersonalizada}`;
 
-            // Convertir IP base a número decimal para facilitar cálculos
+            // Calcular tamaño de bloque y hosts
+            const bitsHostDisponibles = 32 - bitsRedPorDefecto;
+            const bitsHostsPorSubred = bitsHostDisponibles - bitsSubred;
+            const tamañoBloque = Math.pow(2, bitsHostsPorSubred);
+            const hostsPorSubred = tamañoBloque - 2;
+            const totalHostsUtilizados = hostsPorSubred * numRedes;
+
+            // Calcular hosts no utilizados
+            const hostsEnSubredesNoUsadas = subredesNoUsadas * tamañoBloque;
+            const hostsTotalEnRed = Math.pow(2, bitsHostDisponibles);
+            const hostsNoUtilizados = hostsEnSubredesNoUsadas;
+
+            // Verificar si es posible crear las subredes solicitadas
+            if (bitsSubred > bitsHostDisponibles) {
+                const maxRedes = Math.pow(2, bitsHostDisponibles);
+                alert(`Error: La clase ${clase} solo permite crear hasta ${maxRedes} subredes. 
+                Has solicitado ${numRedes} subredes, que requieren ${bitsSubred} bits, pero solo hay ${bitsHostDisponibles} bits disponibles.`);
+                return;
+            }
+
+            // Convertir IP base a número decimal
             const ipBaseDecimal = ipADecimal(ipBase);
 
             // Generar tabla de resultados
             const cuerpoTabla = document.getElementById('cuerpoTabla');
             cuerpoTabla.innerHTML = '';
 
-            // Información adicional sobre la división
+            // Información adicional
+            let infoSubredesNoUsadas = '';
+            if (subredesNoUsadas > 0) {
+                infoSubredesNoUsadas = `
+                    <p style="color: #e74c3c; font-weight: bold;">
+                        ⚠️ Se crearon ${subredesPosibles} subredes posibles, pero solo se usan ${numRedes}.
+                        ${subredesNoUsadas} subredes no se utilizan (${hostsNoUtilizados} hosts no disponibles).
+                    </p>
+                `;
+            }
+
             document.getElementById('infoResultados').innerHTML = `
                 <h3>Resumen de la División de Subredes</h3>
                 <p>Se han creado ${numRedes} subredes a partir de la red ${ipBase} (Clase ${clase})</p>
+                <p><strong>Bits de subred utilizados:</strong> ${bitsSubred}</p>
+                <p><strong>Subredes posibles con ${bitsSubred} bits:</strong> ${subredesPosibles}</p>
+                ${infoSubredesNoUsadas}
             `;
 
             // Resumen de la red
@@ -610,37 +645,45 @@
                     <strong>Clase de red:</strong> <span>${clase}</span>
                 </div>
                 <div class="resumen-item">
-                    <strong>Número de subredes:</strong> <span>${numRedes}</span>
+                    <strong>Subredes solicitadas:</strong> <span>${numRedes}</span>
                 </div>
                 <div class="resumen-item">
-                    <strong>Hosts por subred (total):</strong> <span>${hostsPorSubred}</span>
+                    <strong>Subredes creadas:</strong> <span>${subredesPosibles}</span>
                 </div>
                 <div class="resumen-item">
-                    <strong>Hosts utilizables por subred:</strong> <span>${hostsUtilizablesPorSubred}</span>
+                    <strong>Subredes no utilizadas:</strong> <span>${subredesNoUsadas}</span>
+                </div>
+                <div class="resumen-item">
+                    <strong>Hosts por subred:</strong> <span>${hostsPorSubred}</span>
                 </div>
                 <div class="resumen-item">
                     <strong>Total hosts utilizables:</strong> <span>${totalHostsUtilizados.toLocaleString()}</span>
                 </div>
                 <div class="resumen-item">
-                    <strong>Hosts reservados (red+broadcast):</strong> <span>${2 * numRedes}</span>
+                    <strong>Hosts reservados (red+broadcast):</strong> <span>${(2 * numRedes)}</span>
                 </div>
                 <div class="resumen-item">
-                    <strong>Hosts libres/sin usar:</strong> <span>${hostsLibres >= 0 ? hostsLibres.toLocaleString() : 0}</span>
+                    <strong>Hosts no utilizados:</strong> <span style="color: ${hostsNoUtilizados > 0 ? '#e74c3c' : '#27ae60'}">${hostsNoUtilizados.toLocaleString()}</span>
                 </div>
                 <div class="resumen-item">
-                    <strong>Máscara de subred:</strong> <span>${mascaraPersonalizada}</span>
+                    <strong>Máscara de subred:</strong> <span>${mascaraPersonalizada} ${cidr}</span>
+                </div>
+                <div class="resumen-item">
+                    <strong>Tamaño de bloque por subred:</strong> <span>${tamañoBloque} direcciones</span>
+                </div>
+                <div class="resumen-item">
+                    <strong>Eficiencia de uso:</strong> <span>${((totalHostsUtilizados / hostsTotales) * 100).toFixed(1)}%</span>
                 </div>
             `;
 
-            // Generar información para cada subred individual
+            // Generar información para cada subred
             for (let i = 0; i < numRedes; i++) {
-                // Calcular direcciones para cada subred
                 const direccionRed = ipBaseDecimal + i * tamañoBloque;
                 const primeraIPUtil = direccionRed + 1;
                 const ultimaIPUtil = direccionRed + tamañoBloque - 2;
                 const direccionBroadcast = direccionRed + tamañoBloque - 1;
 
-                // Crear fila de tabla con la información de la subred
+                // Crear fila de tabla
                 const fila = document.createElement('tr');
                 fila.innerHTML = `
                     <td>${i + 1}</td>
@@ -648,21 +691,24 @@
                     <td>${decimalAIP(primeraIPUtil)}</td>
                     <td>${decimalAIP(ultimaIPUtil)}</td>
                     <td>${decimalAIP(direccionBroadcast)}</td>
-                    <td>${mascaraPersonalizada}</td>
-                    <td>${hostsUtilizablesPorSubred}</td>
+                    <td>${mascaraPersonalizada} ${cidr}</td>
+                    <td>${hostsPorSubred}</td>
                 `;
                 cuerpoTabla.appendChild(fila);
             }
 
-            // Mostrar la sección de resultados
+            // Mostrar resultados
             document.getElementById('resultados').style.display = 'block';
         }
 
-        /**
-         * Convierte una dirección IP en formato string a un número decimal
-         * @param {string} ip - Dirección IP en formato "a.b.c.d"
-         * @returns {number} - Representación decimal de la IP
-         */
+        function calcularMascara(bitsRed) {
+            let mascara = 0;
+            for (let i = 0; i < bitsRed; i++) {
+                mascara |= (1 << (31 - i));
+            }
+            return decimalAIP(mascara);
+        }
+
         function ipADecimal(ip) {
             const octetos = ip.split('.');
             return (parseInt(octetos[0]) << 24) +
@@ -671,11 +717,6 @@
                 parseInt(octetos[3]);
         }
 
-        /**
-         * Convierte un número decimal a una dirección IP en formato string
-         * @param {number} decimal - Número decimal que representa una IP
-         * @returns {string} - Dirección IP en formato "a.b.c.d"
-         */
         function decimalAIP(decimal) {
             return [(decimal >>> 24) & 255,
             (decimal >>> 16) & 255,
@@ -684,4 +725,5 @@
         }
     </script>
 </body>
+
 </html>
